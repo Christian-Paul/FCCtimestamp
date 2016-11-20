@@ -4,7 +4,7 @@ var app = express();
 var port = process.env.PORT || 3000;
 
 app.get('/', function(req, res) {
-    res.send('<html><head></head><body><h1>Hello world!</h1></body></html>');
+    res.sendFile(__dirname + '/index.htm');
 });
 
 app.get('/:id', function(req, res) {
@@ -40,11 +40,11 @@ app.get('/:id', function(req, res) {
     // if the request is not a number and it fails to be parsed into unix
     // or if the request is too high of a unix value
     // null will be returned
-    if(unix === "NaN" || request > 253402041600) {
+    if(unix === 'NaN' || request > 253402041600) {
         res.json({ unix: null, natural: null, request: request});  
+    } else {
+        res.json({ unix: unix, natural: natural, request: request});
     }
-    
-    res.json({ unix: unix, natural: natural, request: request});
 });
 
 app.listen(port);
